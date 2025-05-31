@@ -115,8 +115,6 @@ func (r *knowledgeBaseResource) Schema(ctx context.Context, request resource.Sch
 						"vector_knowledge_base_configuration": schema.ListNestedBlock{
 							CustomType: fwtypes.NewListNestedObjectTypeOf[vectorKnowledgeBaseConfigurationModel](ctx),
 							Validators: []validator.List{
-								listvalidator.IsRequired(),
-								listvalidator.SizeAtLeast(1),
 								listvalidator.SizeAtMost(1),
 							},
 							PlanModifiers: []planmodifier.List{
@@ -400,6 +398,7 @@ func (r *knowledgeBaseResource) Schema(ctx context.Context, request resource.Sch
 									"field_mapping": schema.ListNestedBlock{
 										CustomType: fwtypes.NewListNestedObjectTypeOf[redisEnterpriseCloudFieldMappingModel](ctx),
 										Validators: []validator.List{
+											listvalidator.IsRequired(),
 											listvalidator.SizeAtMost(1),
 										},
 										PlanModifiers: []planmodifier.List{
@@ -408,19 +407,19 @@ func (r *knowledgeBaseResource) Schema(ctx context.Context, request resource.Sch
 										NestedObject: schema.NestedBlockObject{
 											Attributes: map[string]schema.Attribute{
 												"metadata_field": schema.StringAttribute{
-													Optional: true,
+													Required: true,
 													PlanModifiers: []planmodifier.String{
 														stringplanmodifier.RequiresReplace(),
 													},
 												},
 												"text_field": schema.StringAttribute{
-													Optional: true,
+													Required: true,
 													PlanModifiers: []planmodifier.String{
 														stringplanmodifier.RequiresReplace(),
 													},
 												},
 												"vector_field": schema.StringAttribute{
-													Optional: true,
+													Required: true,
 													PlanModifiers: []planmodifier.String{
 														stringplanmodifier.RequiresReplace(),
 													},
